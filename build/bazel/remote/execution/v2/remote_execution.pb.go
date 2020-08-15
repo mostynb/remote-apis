@@ -34,7 +34,8 @@ const _ = proto.ProtoPackageIsVersion3 // please upgrade the proto package
 type ExecutionStage_Value int32
 
 const (
-	// Invalid value.
+	// Invalid value.1
+	// TESTING GITHUB ACTION HERE
 	ExecutionStage_UNKNOWN ExecutionStage_Value = 0
 	// Checking the result against the cache.
 	ExecutionStage_CACHE_CHECK ExecutionStage_Value = 1
@@ -127,7 +128,8 @@ func (DigestFunction_Value) EnumDescriptor() ([]byte, []int) {
 type SymlinkAbsolutePathStrategy_Value int32
 
 const (
-	// Invalid value.
+	// Invalid value.2
+	// TESTING GITHUB ACTION HERE
 	SymlinkAbsolutePathStrategy_UNKNOWN SymlinkAbsolutePathStrategy_Value = 0
 	// Server will return an `INVALID_ARGUMENT` on input symlinks with absolute
 	// targets.
