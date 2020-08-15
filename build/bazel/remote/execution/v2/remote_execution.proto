@@ -32,7 +32,6 @@ option java_package = "build.bazel.remote.execution.v2";
 option objc_class_prefix = "REX";
 
 
-// TESTING GITHUB ACTION HERE
 // The Remote Execution API is used to execute an
 // [Action][build.bazel.remote.execution.v2.Action] on the remote
 // workers.
@@ -1248,7 +1247,8 @@ message ExecuteResponse {
 // The current stage of action execution.
 message ExecutionStage {
   enum Value {
-    // Invalid value.
+    // Invalid value.1
+    // TESTING GITHUB ACTION HERE
     UNKNOWN = 0;
 
     // Checking the result against the cache.
@@ -1573,7 +1573,8 @@ message PriorityCapabilities {
 // Describes how the server treats absolute symlink targets.
 message SymlinkAbsolutePathStrategy {
   enum Value {
-    // Invalid value.
+    // Invalid value.2
+    // TESTING GITHUB ACTION HERE
     UNKNOWN = 0;
 
     // Server will return an `INVALID_ARGUMENT` on input symlinks with absolute

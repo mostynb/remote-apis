@@ -43,4 +43,6 @@ jobs:
 
     - name: Check for changes
       run: |
+        pwd
+        ls
         git status
