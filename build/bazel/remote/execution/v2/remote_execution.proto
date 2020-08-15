@@ -1247,8 +1247,7 @@ message ExecuteResponse {
 // The current stage of action execution.
 message ExecutionStage {
   enum Value {
-    // Invalid value.1
-    // TESTING GITHUB ACTION HERE
+    // Invalid value.
     UNKNOWN = 0;
 
     // Checking the result against the cache.
@@ -1573,8 +1572,7 @@ message PriorityCapabilities {
 // Describes how the server treats absolute symlink targets.
 message SymlinkAbsolutePathStrategy {
   enum Value {
-    // Invalid value.2
-    // TESTING GITHUB ACTION HERE
+    // Invalid value.
     UNKNOWN = 0;
 
     // Server will return an `INVALID_ARGUMENT` on input symlinks with absolute
