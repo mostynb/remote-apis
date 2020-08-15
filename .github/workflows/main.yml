@@ -40,3 +40,7 @@ jobs:
     - name: Run hooks
       run: |
         ./hooks/pre-commit
+
+    - name: Check for changes
+      run: |
+        git status
