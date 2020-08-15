@@ -46,3 +46,4 @@ jobs:
         pwd
         ls
         git status
+        git diff --cached
