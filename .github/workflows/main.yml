@@ -36,5 +36,5 @@ jobs:
 
     - name: Check for changes
       run: |
-        git commit -m "regenerate pb.go files"
+        git commit -m "regenerate pb.go files" || exit
         git push origin action_test2 # FIXME: figure out the branch automatically. Or I guess we only need apply it to master?
