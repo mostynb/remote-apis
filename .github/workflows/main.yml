@@ -1,19 +1,13 @@
 name: CI
 
-# Controls when the action will run.
 on:
   push:
-    branches: [ action_test2 ]
-  pull_request:
-    branches: [ actopm_test2 ]
+    branches: [ action_test2 ] # TODO: switch to master
 
 jobs:
-  # This workflow contains a single job called "build"
   build:
-    # The type of runner that the job will run on
     runs-on: ubuntu-latest
 
-    # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
     # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
     - uses: actions/checkout@v2
@@ -26,13 +20,14 @@ jobs:
     - name: Install bazelisk
       run: |
         curl -LO "https://github.com/bazelbuild/bazelisk/releases/download/v1.6.0/bazelisk-linux-amd64"
-        mkdir -p "${GITHUB_WORKSPACE}/bin/"
-        mv bazelisk-linux-amd64 "${GITHUB_WORKSPACE}/bin/bazel"
-        chmod +x "${GITHUB_WORKSPACE}/bin/bazel"
+        mkdir -p "${HOME}/bin"
+        mv bazelisk-linux-amd64 "${HOME}/bin/bazel"
+        chmod +x "${HOME}/bin/bazel"
 
     - name: Run hooks
       run: |
-        ./hooks/pre-commit
+        env
+        PATH=${HOME}/bin:$PATH ./hooks/pre-commit
 
     - name: Check for changes
       run: |
@@ -40,4 +35,4 @@ jobs:
         then
           exit
         fi
-        git push origin action_test2 # FIXME: figure out the branch automatically. Or I guess we only need apply it to master?
+        git push origin action_test2 # TODO: switch to master
