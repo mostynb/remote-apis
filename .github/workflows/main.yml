@@ -1,14 +1,12 @@
 name: CI
 
-# Controls when the action will run. Triggers the workflow on push or pull request
-# events but only for the master branch
+# Controls when the action will run.
 on:
   push:
     branches: [ action_test2 ]
   pull_request:
     branches: [ actopm_test2 ]
 
-# A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
   # This workflow contains a single job called "build"
   build:
@@ -38,9 +36,5 @@ jobs:
 
     - name: Check for changes
       run: |
-        pwd
-        ls
-        git status
-        git diff --cached
         git commit -m "regenerate pb.go files"
-        git push origin action_test2 # FIXME: figure out the branch automatically
+        git push origin action_test2 # FIXME: figure out the branch automatically. Or I guess we only need apply it to master?
