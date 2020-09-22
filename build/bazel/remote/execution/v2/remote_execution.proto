@@ -235,6 +235,8 @@ service ActionCache {
 // Uploads of the same data MAY occur concurrently in any form, compressed or
 // uncompressed.
 //
+// Clients MAY choose any compression level.
+//
 // Clients SHOULD NOT use gRPC-level compression for ByteStream API `Write`
 // calls of compressed blobs, since this would compress already-compressed data.
 //
@@ -271,9 +273,9 @@ service ActionCache {
 //   the case of failure such as retrying a limited number of times or
 //   surfacing an error to the user.
 //
-// Servers MAY use any compression level they choose, including different
-// levels for different blobs (e.g. choosing a level designed for maximum
-// speed for data known to be incompressible).
+// Servers MAY choose any compression level, including different levels
+// for different blobs (e.g. choosing a level designed for maximum speed
+// for data known to be incompressible).
 //
 // Servers MUST be able to provide data for all recently advertised blobs in
 // each of the compression formats that the server supports, as well as in
