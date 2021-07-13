@@ -1107,6 +1107,10 @@ message ActionResult {
   // would cause the response to exceed message size limits.
   bytes stdout_raw = 5;
 
+  // If specified, the encoding used for `stdout_raw`. Must be either `IDENTITY` (or unspecified),
+  // or one of the values specified in `GetActionResultRequest.acceptable_compressors`.
+  Compressor.Value stdout_compressor = 13;
+
   // The digest for a blob containing the standard output of the action, which
   // can be retrieved from the
   // [ContentAddressableStorage][build.bazel.remote.execution.v2.ContentAddressableStorage].
@@ -1118,6 +1122,10 @@ message ActionResult {
   // message. The server MAY omit inlining, even if requested, and MUST do so if inlining
   // would cause the response to exceed message size limits.
   bytes stderr_raw = 7;
+
+  // If specified, the encoding used for `stderr_raw`. Must be either `IDENTITY` (or unspecified),
+  // or one of the values specified in `GetActionResultRequest.acceptable_compressors`.
+  Compressor.Value stderr_compressor = 14;
 
   // The digest for a blob containing the standard error of the action, which
   // can be retrieved from the
@@ -1152,6 +1160,10 @@ message OutputFile {
   // message. The server MAY omit inlining, even if requested, and MUST do so if inlining
   // would cause the response to exceed message size limits.
   bytes contents = 5;
+
+  // The encoding used in `contents`. Must be `IDENTITY` (or unspecified), or
+  // one of the acceptable compressors specified in the client's request.
+  Compressor.Value compressor = 8;
 
   // The supported node properties of the OutputFile, if requested by the Action.
   reserved 6;
@@ -1280,6 +1292,11 @@ message ExecuteRequest {
   // The server will have a default policy if this is not provided.
   // This may be applied to both the ActionResult and the associated blobs.
   ResultsCachePolicy results_cache_policy = 8;
+
+  // A list of acceptable encodings to used for inlined data.  Must be
+  // `IDENTITY` (or unspecified), or one or more of the compressors
+  // supported by the server.
+  Compressor.Value compressor = 9;
 }
 
 // A `LogFile` is a log stored in the CAS.
@@ -1412,6 +1429,11 @@ message GetActionResultRequest {
   // `output_files` (DEPRECATED since v2.1) in the
   // [Command][build.bazel.remote.execution.v2.Command] message.
   repeated string inline_output_files = 5;
+
+  // A list of acceptable encodings to used for inlined data.  Must be
+  // `IDENTITY` (or unspecified), or one or more of the compressors
+  // supported by the server.
+  repeated Compressor.Value acceptable_compressors = 6;
 }
 
 // A request message for
@@ -1469,6 +1491,11 @@ message BatchUpdateBlobsRequest {
 
     // The raw binary data.
     bytes data = 2;
+
+    // The format of `data`. Must be `IDENTITY` (or unspecified), or one of the
+    // compressors advertised by the `CacheCapabilities.supported_compressor` if
+    // `CacheCapabilities.inlined_compressed_blobs` is true.
+    Compressor.Value compressor = 3;
   }
 
   // The instance of the execution system to operate against. A server may
@@ -1510,6 +1537,11 @@ message BatchReadBlobsRequest {
 
   // The individual blob digests.
   repeated Digest digests = 2;
+
+  // A list of acceptable encodings to used for inlined data.  Must be
+  // `IDENTITY` (or unspecified), or one or more of the compressors
+  // supported by the server.
+  repeated Compressor.Value acceptable_compressors = 3;
 }
 
 // A response message for
@@ -1522,6 +1554,10 @@ message BatchReadBlobsResponse {
 
     // The raw binary data.
     bytes data = 2;
+
+    // The format the data is encoded in. MUST be `IDENTITY` (or unspecified),
+    // or one of the acceptable compressors specified in the `BatchReadBlobsRequest`.
+    Compressor.Value compressor = 4;
 
     // The result of attempting to download that blob.
     google.rpc.Status status = 3;
@@ -1724,6 +1760,11 @@ message CacheCapabilities {
   // Note that this does not imply which if any compressors are supported by
   // the server at the gRPC level.
   repeated Compressor.Value supported_compressor = 6;
+
+  // Whether compression of inlined data is also supported (if so, the
+  // server must support each of the compressors specified in the
+  // `supported_compressor` field).
+  bool inlined_compressed_blobs = 7;
 }
 
 // Capabilities of the remote execution system.
