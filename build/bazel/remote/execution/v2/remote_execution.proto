@@ -1430,9 +1430,8 @@ message GetActionResultRequest {
   // [Command][build.bazel.remote.execution.v2.Command] message.
   repeated string inline_output_files = 5;
 
-  // A list of acceptable encodings to used for inlined data.  Must be
-  // `IDENTITY` (or unspecified), or one or more of the compressors
-  // supported by the server.
+  // A list of acceptable encodings to used for inlined data. `IDENTITY`
+  // is always allowed even if not specified here.
   repeated Compressor.Value acceptable_compressors = 6;
 }
 
@@ -1761,9 +1760,9 @@ message CacheCapabilities {
   // the server at the gRPC level.
   repeated Compressor.Value supported_compressor = 6;
 
-  // Whether compression of inlined data is also supported (if so, the
-  // server must support each of the compressors specified in the
-  // `supported_compressor` field).
+  // Whether or not the server accepts compressed data inline. If true,
+  // the server MUST support each of the compressors specified in the
+  // `supported_compressor` field.
   bool inlined_compressed_blobs = 7;
 }
 
